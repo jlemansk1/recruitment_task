@@ -9,7 +9,7 @@ test_data = pd.read_csv('cybersecurity_test.csv', delimiter='|')
 features = ['overallseverity', 'timestamp_dist', 'correlatedcount', 'score',
             'isiptrusted', 'untrustscore', 'flowscore', 'trustscore', 'enforcementscore']
 
-
+y_train = train_data['notified']
 # Handling missing values in the 'score' column
 mean_value = train_data['score'].mean()
 train_data['score'].fillna(mean_value, inplace=True)
@@ -19,8 +19,8 @@ test_data['score'].fillna(mean_value, inplace=True)
 # Training the Isolation Forest model
 X1_train = train_data[features]
 
-model1 = IsolationForest(random_state=42)
-model1.fit(X1_train)
+model1 = IsolationForest(n_estimators=500, random_state=42)
+model1.fit(X1_train, y_train)
 
 
 
